@@ -23,7 +23,7 @@ def about(request):
 
 
 def addpage(request):
-    return HttpResponse('Добавить статью')
+    return render(request, 'women/addpage.html', {'menu': menu, 'title': 'Добавление статьи'})
 
 
 def contact(request):
@@ -34,45 +34,32 @@ def login(request):
     return HttpResponse('Автоматизация')
 
 
-# def categories(request, catid):
-#     if request.GET:
-#         print(request.GET)
-#     return HttpResponse(f'<h1>Статьи по категориям</h1><p>{catid}</p>')
-#
-#
-# def archive(request, year):
-#     if int(year) > 2020:
-#         return redirect('home', permanent=False)
-#
-#     return HttpResponse(f'<h1>Архив по годам</h1><p>{year}</p>')
-
-
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</1h>')
 
 
 def show_post(request, post_slug):
     post = get_object_or_404(Women, slug=post_slug)
-    cat_slug = Category.objects.get(pk=post.cat_id).slug
+
     context = {
         'post': post,
         'title': post.title,
-        'cat_selected': cat_slug
+        'cat_selected': post.cat_id
     }
 
     return render(request, 'women/post.html', context=context)
 
 
 def show_category(request, cat_slug):
-    cat_id = Category.objects.get(slug=cat_slug)
-    posts = Women.objects.filter(cat_id=cat_id.pk)
+    category = get_object_or_404(Category, slug=cat_slug)
+    posts = Women.objects.filter(cat_id=category)
 
     if len(posts) == 0:
         raise Http404()
 
     context = {'posts': posts,
                'title': 'Главная страница',
-               'cat_selected': cat_slug
+               'cat_selected': category.pk
     }
 
     return render(request, 'women/index.html', context=context)
