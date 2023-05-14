@@ -21,11 +21,11 @@ def show_categories(sort, cat_selected):
     return {'cats': cats, 'cat_selected': cat_selected}
 
 
-@register.inclusion_tag('women/main_menu.html')
-def show_main_menu():
-    menu = [{'title': 'О сайте', 'url_name': 'about'},
-            {'title': 'Добавить статью', 'url_name': 'add_page'},
-            {'title': 'Обратная саязь', 'url_name': 'contact'},
-            {'title': 'Войти', 'url_name': 'login'}]
-
-    return {'menu': menu}
+# @register.inclusion_tag('women/main_menu.html')
+# def show_main_menu():
+#     menu = [{'title': 'О сайте', 'url_name': 'about'},
+#             {'title': 'Добавить статью', 'url_name': 'add_page'},
+#             {'title': 'Обратная саязь', 'url_name': 'contact'},
+#             {'title': 'Войти', 'url_name': 'login'}]
+#
+#     return {'menu': menu}
